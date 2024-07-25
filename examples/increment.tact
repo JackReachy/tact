@@ -43,12 +43,12 @@ contract IncrementContract with Deployable {
         if (ex == null) {
             self.counters2.set(msg.key, true);
         } else {
-            self.counters2.set(msg.key, !ex.unwrap());
+            self.counters2.set(msg.key, !(ex!!));
         }
     }
 
     receive(msg: Persist) {
-        require(self.counters3.get(msg.key) == null, "Counter not empty");
+        require(self.counters3.get(msg.key) == null, "Empty counter");
         self.counters3.set(msg.key, msg.content);
     }
 
@@ -64,7 +64,7 @@ contract IncrementContract with Deployable {
         return self.counters;
     }
 
-    get fun counters2(): map<Int, Bool> {
-        return self.counters2;
+    get fun counters2(): map<Address, Int> {
+        return self.counters4;
     }
 }
